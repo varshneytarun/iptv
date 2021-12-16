@@ -70,6 +70,7 @@
 		.select2({width:'auto', placeholder:'Select a country...'})
 		.on('select2:select', function(e) {
 			country = e.params.data.id;
+			select2.empty().trigger('change');
 			parseChannels();
 		});
 		loadChannels();
