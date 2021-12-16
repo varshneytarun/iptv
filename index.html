@@ -29,7 +29,7 @@
 	var	channelMap = new Map();
 	
 	function loadChannels() {
-		fetch('iptv.json')
+		fetch('https://iptv-org.github.io/iptv/channels.json')
 		.then(response => response.json())
 		.then(json => {
 			select2 = 
