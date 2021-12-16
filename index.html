@@ -21,10 +21,11 @@
 		.then(json => {
 			select2 = 
 				$(".channels-dropdown")
-				.select2({width:'250px'})
+				.select2({width:'250px', placeholder:'Select a channel...'})
 				.on('select2:select', function(e) {
 					var channel = channelMap.get(e.params.data.id);
 					$('#video-container').show();
+					player.pause();
 					player.poster(channel.logo || '');
 					player.src(channel.url);
 					player.play();
@@ -57,7 +58,9 @@
 	
 	<center>
 	
-		<select class="channels-dropdown form-control"></select>
+		<select class="channels-dropdown form-control">
+			<option></option>
+		</select>
 
 		<br/><br/>
 
