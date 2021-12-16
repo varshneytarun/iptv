@@ -1,0 +1,64 @@
+<html>
+<head>
+	<link href="https://unpkg.com/video.js/dist/video-js.min.css" rel="stylesheet" />
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+	<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+	<script src="https://unpkg.com/video.js/dist/video.min.js"></script>
+	<script src="https://unpkg.com/videojs-flash/dist/videojs-flash.js"></script>
+</head>
+<body>
+	<script>
+	
+	var channels;
+	var channelMap = new Map();
+	var select2;
+	
+	fetch('iptv.json')
+	.then(response => response.json())
+	.then(json => {
+		select2 = 
+			$(".channels-dropdown")
+			.select2({width:'200px'})
+			.on('select2:select', function(e) {
+				var channel = channelMap.get(e.params.data.id);
+				$('#video-container').show();
+				videojs("my-video").poster(channel.logo || '');
+				videojs("my-video").src(channel.url);
+				videojs("my-video").play();
+			});
+		parseChannels(json);
+	});
+	
+	function parseChannels(json) {
+		json.forEach(channel => { 
+			if (channel.countries.filter(isIndianChannel).length > 0) {
+				channelMap.set(channel.name, channel);
+				var newOption = new Option(channel.name, channel.name, false, false);
+				select2.append(newOption).trigger('change');
+			}
+		})
+	}
+	
+	function isIndianChannel(countries) {
+		return (JSON.stringify(countries).indexOf('IN') > -1);
+	}
+	
+	</script>
+	
+	<center>
+	
+		<select class="channels-dropdown form-control"></select>
+	
+		<br/><br/>
+	
+		<div id="video-container" style="display:none">
+			<video id="my-video" class="video-js" controls preload="auto" width="960" height="540" poster="" data-setup="{}">' 
+				<source src="" type="application/x-mpegURL" />
+			</video>
+		</div>
+	
+	</center>
+	
+</body>
+</html>
