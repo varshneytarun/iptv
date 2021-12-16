@@ -25,7 +25,7 @@
 				.on('select2:select', function(e) {
 					var channel = channelMap.get(e.params.data.id);
 					$('#video-container').show();
-					player.pause();
+					player.reset();
 					player.poster(channel.logo || '');
 					player.src(channel.url);
 					player.play();
