@@ -34,7 +34,7 @@
 	<script>
 	
 	var channels, select2, player, data;
-	var	channelMap = new Map();
+	var channelMap = new Map();
 	var country = 'IN';
 
 	function loadChannels() {
@@ -60,16 +60,12 @@
 	function parseChannels() {
 		select2.append(new Option('', '', false, false)).trigger('change');
 		data.forEach(channel => { 
-			if (channel.countries.filter(isMatchingChannel).length > 0) {
+			if (channel.country == country) {
 				channelMap.set(channel.name, channel);
 				var newOption = new Option(channel.name, channel.name, false, false);
 				select2.append(newOption).trigger('change');
 			}
 		})
-	}
-	
-	function isMatchingChannel(countries) {
-		return (JSON.stringify(countries).indexOf(country) > -1);
 	}
 	
 	window.addEventListener("load", function () {
