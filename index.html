@@ -38,7 +38,7 @@
 	var country = 'IN';
 
 	function loadChannels() {
-		fetch('https://iptv-org.github.io/iptv/channels.json')
+		fetch('https://iptv-org.github.io/api/channels.json')
 		.then(response => response.json())
 		.then(json => {
 			select2 = 
